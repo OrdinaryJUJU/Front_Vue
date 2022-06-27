@@ -7,7 +7,6 @@ export const fetchData = query => {
         params: query
     });
 };
-
 export const loginValidate = param => {
 	return request({
 		url: 'http://localhost:8081/user/login',
