@@ -1,5 +1,4 @@
 <template>
-    <div class="login-wrap">
         <div class="ms-login">
 			<div >
 				<h1 align="center">用户信息更新</h1>
@@ -7,10 +6,10 @@
 			</div>
             <div class="form-box">
                 <el-form ref="form" :model="form" label-width="80px" label-position="top"  >
-                    <el-form-item label="邮     箱 :" prop="email" placeholder="请输入邮箱" :rules="[ { required: true, message: '请输入邮箱地址', trigger: 'blur' }, { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] } ]" >
+                    <el-form-item label="邮     箱 :" prop="email" placeholder="请输入邮箱" :rules="[  { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] } ]" >
                         <el-input v-model="form.email"></el-input>
                     </el-form-item>
-					<el-form-item label="用户名:" prop=" username" placeholder="请输入用户名" :rules="[ { required: true, message: '请输入用户名', trigger: 'blur' }]">
+					<el-form-item label="用户名:" prop=" username" placeholder="请输入用户名" >
 					    <el-input v-model="form.username"></el-input>
 					</el-form-item>
                     <el-form-item label="性 别:">
@@ -19,17 +18,17 @@
                             <el-option key="female" label="女" value="1"></el-option>
                         </el-select>
                     </el-form-item>
-					<el-form-item label="密 码:" prop="password" placeholder="请输入密码" :rules="[ { required: true, message: '请输入密码', trigger: 'blur' }]">
+					<el-form-item label="密 码:" prop="password" placeholder="请输入密码" >
 					    <el-input v-model="form.password"></el-input>
 					</el-form-item>
                     <el-form-item >
-                        <el-button position="right" type="primary" @click="onSubmit">表单提交</el-button>
+                        <el-button position="right" type="primary" @click="onSubmit">提交</el-button>
                         <el-button>取消</el-button>
                     </el-form-item>
                 </el-form>
             </div>
         </div>
-    </div>
+
 </template>
 
 <script>
@@ -69,12 +68,12 @@ export default {
 				formRef.value.code=res.data;
 				if(formRef.value.code==0){
 					console.log(form);
-					ElMessage.success("提交成功！");
+					this.$message.success('提交成功！');
 				}else{
 					return false;
 				}
 			});
-            this.$message.success('提交成功！请登录');
+            
         }
     },
 	

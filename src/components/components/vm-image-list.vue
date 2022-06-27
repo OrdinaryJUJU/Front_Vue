@@ -4,13 +4,15 @@
       <div class="panel-heading">
         {{ title }}
       </div>
+		  <Row >
+		    <span>每页显示</span>
+		    <Input :max="40" :min="1" :number="true" v-model="showNum" class="input-number" @on-change=" updateDataShow "></Input>
+		    <span class="total">图片总数{{ data.length }}</span>
+		    <Page :total="data.length" :current="currentPage" :page-size="showNum" @on-change="pageChange"></Page>
+		  </Row>
+	 
       <Row type="flex" align="middle" justify="space-between" class="panel-body">
-        <Row >
-          <span>每页显示</span>
-          <Input :max="40" :min="1" :number="true" v-model="showNum" class="input-number" @on-change=" updateDataShow "></Input>
-          <span class="total">图片总数{{ data.length }}</span>
-          <Page :total="data.length" :current="currentPage" :page-size="showNum" @on-change="pageChange"></Page>
-        </Row>
+        
       </Row>
     </Row>
     <Row class="image-list" :gutter="16" >
@@ -93,5 +95,8 @@
   }
 </script>
 <style>
-
+.page{
+		float:left;
+		margin-left: 50px;
+	}
 </style>
