@@ -25,6 +25,7 @@ export const register = param => {
 export const changedetection = param => {
 	return request({
 		url: 'http://localhost:8081/changedetection/',
+		headers: {'token': localStorage.token},
 		method: 'post',
 		params: param
 	});

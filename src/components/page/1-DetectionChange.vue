@@ -41,8 +41,7 @@ import axios from 'axios';
         insideSrc1: '',
 		insideSrc2: '',
 		param: {
-			uploadFile:['',''],
-			token:localStorage.token
+			uploadFile:["",""],
 		},
           // 接受上传的文件类型
         acceptFile: 'image/png,image/jpeg'
@@ -66,7 +65,8 @@ import axios from 'axios';
           // this.title = reader.result
 		  this.param.uploadFile[0]=reader.result
           this.insideSrc1= event.srcElement.result
-		  console.log(this.param.token)
+		  //console.log(this.param.token)
+		  console.log(this.param.uploadFile[0])
         }
           // 若返回 false 则停止上传,此时中断则判断大小无法使用max-size属性判断
         return false
@@ -88,12 +88,13 @@ import axios from 'axios';
 	      // this.title = reader.result
 		  this.param.uploadFile[1]=reader.result
 	      this.insideSrc2= event.srcElement.result
+		  console.log(this.param.uploadFile[1])
 	    }
 	      // 若返回 false 则停止上传,此时中断则判断大小无法使用max-size属性判断
 	    return false
 	  },
 	  onSubmit (){
-	  	changedetection(this.param).then(res=>{
+	  	changedetection(this.uploadFile).then(res=>{
 	  		//formRef.value.code=res.data;
 	  		// if(formRef.value.code==0){
 	  		// 	console.log(form);

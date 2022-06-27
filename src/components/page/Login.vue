@@ -50,7 +50,8 @@ export default {
                 if (res.code==200) {
                     this.$message.success('登录成功');
                     localStorage.setItem('ms_username', this.param.username);
-					localStorage.setItem("token",res.token);
+					//window.localStorage.setItem('token',JSON.stringify(token));
+					localStorage.setItem("token",res.data.token);
 					//console.log(localStorage.getItem('token'));
                     this.$router.push('/');
                 } else {
