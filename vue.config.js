@@ -9,15 +9,18 @@ module.exports = {
 	//     }
 	//   }
 
-    // devServer: {
-    //     proxy: {
-    //         '/api':{
-    //             target:'http://jsonplaceholder.typicode.com',
-    //             changeOrigin:true,
-    //             pathRewrite:{
-    //                 '/api':''
-    //             }
-    //         }
-    //     }
-    // }
+    devServer: {
+		port:8080,
+		host:'192.168.31.18',
+        proxy: {
+            '/api':{
+                target:'http://localhost:8081',
+				ws:true,
+                changeOrigin:true,
+                pathRewrite:{
+                    '/api':''
+                }
+            }
+        }
+    }
 }

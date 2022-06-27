@@ -13,6 +13,7 @@ import './components/common/directives';
 import 'babel-polyfill';
 //import '!style-loader!css-loader!less-loader!./theme/index.less'
 
+axios.defaults.baseURL = '/api';
 Vue.config.productionTip = false;
 Vue.use(VueI18n);
 Vue.use(ElementUI, {

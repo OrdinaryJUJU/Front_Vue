@@ -41,8 +41,7 @@ import axios from 'axios';
         insideSrc1: '',
 		insideSrc2: '',
 		param: {
-		    img1:'',
-		    img2:'',
+			uploadFile:['',''],
 			token:localStorage.token
 		},
           // 接受上传的文件类型
@@ -59,15 +58,15 @@ import axios from 'axios';
           this.$Message.warning(`文件大小超过了${this.maxSize}KB`)
           return false
         }
-		//this.img1=file
           // 照片转换为base64
         const reader = new FileReader()
           // 将读取到的文件编码成Data URL
         reader.readAsDataURL(file)
         reader.onload = (event) => {
           // this.title = reader.result
-		  this.param.img1=reader.result
+		  this.param.uploadFile[0]=reader.result
           this.insideSrc1= event.srcElement.result
+		  console.log(this.param.token)
         }
           // 若返回 false 则停止上传,此时中断则判断大小无法使用max-size属性判断
         return false
@@ -81,14 +80,13 @@ import axios from 'axios';
 	      this.$Message.warning(`文件大小超过了${this.maxSize}KB`)
 	      return false
 	    }
-		//this.param.img2=file
 	      // 照片转换为base64
 	    const reader = new FileReader()
 	      // 将读取到的文件编码成Data URL
 	    reader.readAsDataURL(file)
 	    reader.onload = (event) => {
 	      // this.title = reader.result
-		  this.param.img2=reader.result
+		  this.param.uploadFile[1]=reader.result
 	      this.insideSrc2= event.srcElement.result
 	    }
 	      // 若返回 false 则停止上传,此时中断则判断大小无法使用max-size属性判断
