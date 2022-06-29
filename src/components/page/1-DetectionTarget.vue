@@ -1,149 +1,116 @@
 <template>
-    <div>
-        <div class="crumbs">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item>
-                    <i class="el-icon-pie-chart"></i> schart图表
-                </el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
-        <div class="container">
-            <div class="plugins-tips">
-                vue-schart：vue.js封装sChart.js的图表组件。
-                访问地址：
-                <a
-                    href="https://github.com/lin-xin/vue-schart"
-                    target="_blank"
-                >vue-schart</a>
-            </div>
-            <div class="schart-box">
-                <div class="content-title">柱状图</div>
-                <schart class="schart" canvasId="bar" :options="options1"></schart>
-            </div>
-            <div class="schart-box">
-                <div class="content-title">折线图</div>
-                <schart class="schart" canvasId="line" :options="options2"></schart>
-            </div>
-            <div class="schart-box">
-                <div class="content-title">饼状图</div>
-                <schart class="schart" canvasId="pie" :options="options3"></schart>
-            </div>
-            <div class="schart-box">
-                <div class="content-title">环形图</div>
-                <schart class="schart" canvasId="ring" :options="options4"></schart>
-            </div>
-        </div>
-    </div>
+  <div>
+	<div class="rowdiv">
+		<div class="imageWrap" id="img1" >
+		  <img :src="insideSrc1" alt="">
+		</div>
+		<Upload
+		  action="image/upload"
+		  :accept="acceptFile"
+		  :before-upload="beforeUpload1">
+		  <Button style="width: 150px;" type="primary">上传图片</Button>
+		</Upload>
+	</div>
+	<div class="rowdiv">
+		<div class="imageWrap" id="img3">
+		  <img :src="out" alt=""  >
+		</div>
+		<div>
+			<Button style="width: 150px;" type="primary" @click="onSubmit" >识别</Button>
+		</div>
+	</div>
+	 
+  </div>
+  
 </template>
-
 <script>
-import Schart from 'vue-schart';
-export default {
-    name: 'basecharts',
-    components: {
-        Schart
+import axios from 'axios';
+  export default {
+    name: 'DetectionTarget',
+    props: {
+      title: {
+        type: String,
+        default: '个人信息'
+      },
+      type: String,
+      columns: Array,
+      data: Array
     },
-    data() {
-        return {
-            options1: {
-                type: 'bar',
-                title: {
-                    text: '最近一周各品类销售图'
-                },
-                bgColor: '#fbfbfb',
-                labels: ['周一', '周二', '周三', '周四', '周五'],
-                datasets: [
-                    {
-                        label: '家电',
-                        fillColor: 'rgba(241, 49, 74, 0.5)',
-                        data: [234, 278, 270, 190, 230]
-                    },
-                    {
-                        label: '百货',
-                        data: [164, 178, 190, 135, 160]
-                    },
-                    {
-                        label: '食品',
-                        data: [144, 198, 150, 235, 120]
-                    }
-                ]
-            },
-            options2: {
-                type: 'line',
-                title: {
-                    text: '最近几个月各品类销售趋势图'
-                },
-                bgColor: '#fbfbfb',
-                labels: ['6月', '7月', '8月', '9月', '10月'],
-                datasets: [
-                    {
-                        label: '家电',
-                        data: [234, 278, 270, 190, 230]
-                    },
-                    {
-                        label: '百货',
-                        data: [164, 178, 150, 135, 160]
-                    },
-                    {
-                        label: '食品',
-                        data: [114, 138, 200, 235, 190]
-                    }
-                ]
-            },
-            options3: {
-                type: 'pie',
-                title: {
-                    text: '服装品类销售饼状图'
-                },
-                legend: {
-                    position: 'left'
-                },
-                bgColor: '#fbfbfb',
-                labels: ['T恤', '牛仔裤', '连衣裙', '毛衣', '七分裤', '短裙', '羽绒服'],
-                datasets: [
-                    {
-                        data: [334, 278, 190, 235, 260, 200, 141]
-                    }
-                ]
-            },
-            options4: {
-                type: 'ring',
-                title: {
-                    text: '环形三等分'
-                },
-                showValue: false,
-                legend: {
-                    position: 'bottom',
-                    bottom: 40
-                },
-                bgColor: '#fbfbfb',
-                labels: ['vue', 'react', 'angular'],
-                datasets: [
-                    {
-                        data: [500, 500, 500]
-                    }
-                ]
-            }
-        };
+    data () {
+      return {
+          // 展示选中的的imageSrc
+        insideSrc1: '',
+		out:'123',
+		file1: '',
+          // 接受上传的文件类型
+        acceptFile: 'image/png,image/jpeg'
+      }
+    },
+    methods: {
+      beforeUpload1 (file) {
+        if (!this.acceptFile.split(',').includes(file.type)) {
+          this.$Message.warning('未选中图片格式的文件')
+          return false
+        }
+        if (file.size / 1024 > this.maxSize) {
+          this.$Message.warning(`文件大小超过了${this.maxSize}KB`)
+          return false
+        }
+          // 照片转换为base64
+        const reader = new FileReader()
+          // 将读取到的文件编码成Data URL
+        reader.readAsDataURL(file)
+        reader.onload = (event) => {
+          // this.title = reader.result
+		  //this.param.uploadFile[0]=reader.result
+          this.insideSrc1= event.srcElement.result
+		  document.getElementById("img1").style.display="inline" 
+		  this.file1 = file;
+        }
+          // 若返回 false 则停止上传,此时中断则判断大小无法使用max-size属性判断
+        return false
+      },
+	  onSubmit (){
+		 let formData = new FormData();
+		formData.append('uploadFile', this.file1);
+		this.$message.success('识别中！请耐心等待！');
+		axios.post('http://localhost:8081/targetextraction/' ,formData,
+			{
+				headers:{
+					'token':localStorage.token,
+					'Content-Type' : 'multipart/form-data'
+						}
+					}).then(res => {
+						if(res.data.code==200)
+						{
+							this.out=res.data.data;
+							document.getElementById("img3").style.display="inline" 
+							
+						}else{
+							this.$message.success('上传失败，请检查后重新上传！');
+						}
+						
+					})
+	  },
     }
-};
-</script>
-
-<style scoped>
-.schart-box {
-    display: inline-block;
-    margin: 20px;
-}
-.schart {
-    width: 600px;
-    height: 400px;
-}
-.content-title {
-    clear: both;
-    font-weight: 400;
-    line-height: 50px;
-    margin: 10px 0;
-    font-size: 22px;
-    color: #1f2f3d;
-}
+  }
+  </script>
+  <style scoped>
+    .imageWrap {
+      /* width: 100%;
+      height: 200px;
+      border: 1px solid red; */
+      object-fit: cover;
+	  display: none;
+    }
+    img {
+      width: 300px;
+      height: 400px;
+      border: 1px solid #000;
+	  /* float:left; */
+    }
+	.rowdiv{
+		float:left;
+		margin-left: 50px;
+	}
 </style>

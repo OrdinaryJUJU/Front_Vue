@@ -1,176 +1,116 @@
 <template>
-<div>
   <div>
-    <input
-      ref="input"
-      type="file"
-      name="image"
-      accept="image/*"
-      @change="setImage"
-    />
-    <div class="content">
-      <section class="cropper-area">
-        <div class="img-cropper">
-          <vue-cropper
-            ref="cropper"
-			:aspect-ratio="16 / 9"
-            :src="imgSrc"
-			preview=".preview"
-          />
-        </div>
-		<!-- 上传图片 -->
-        <div class="actions">
-          <a
-            href="#"
-            role="button"
-            @click.prevent="showFileChooser"
-          >
-           上传图片
-          </a>
-        </div>
-      </section>
-	
-	  <!-- 预览图片 -->
-      <section class="preview-area">
-		  <div>图1</div>
-        <div class="preview" />
-      </section>
-    </div>
+	<div class="rowdiv">
+		<div class="imageWrap" id="img1" >
+		  <img :src="insideSrc1" alt="">
+		</div>
+		<Upload
+		  action="image/upload"
+		  :accept="acceptFile"
+		  :before-upload="beforeUpload1">
+		  <Button style="width: 150px;" type="primary">上传图片</Button>
+		</Upload>
+	</div>
+	<div class="rowdiv">
+		<div class="imageWrap" id="img3">
+		  <img :src="out" alt=""  >
+		</div>
+		<div>
+			<Button style="width: 150px;" type="primary" @click="onSubmit" >识别</Button>
+		</div>
+	</div>
+	 
   </div>
-  <!-- ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！ -->
-  <!-- 表格展示 -->
-</div>
+  
 </template>
-
 <script>
-import VueCropper from 'vue-cropperjs';
-import 'cropperjs/dist/cropper.css';
-export default {
-  components: {
-    VueCropper,
-  },
-  data() {
-    return {
-      imgSrc: '/assets/images/berserk.jpg',
-      cropImg: '',
-      data: null,
-    };
-  },
-  methods: {
-    cropImage() {
-      // get image data for post processing, e.g. upload or setting image src
-      this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
+import axios from 'axios';
+  export default {
+    name: 'ExtractionTarget',
+    props: {
+      title: {
+        type: String,
+        default: '个人信息'
+      },
+      type: String,
+      columns: Array,
+      data: Array
     },
-    flipX() {
-      const dom = this.$refs.flipX;
-      let scale = dom.getAttribute('data-scale');
-      scale = scale ? -scale : -1;
-      this.$refs.cropper.scaleX(scale);
-      dom.setAttribute('data-scale', scale);
-    },
-    flipY() {
-      const dom = this.$refs.flipY;
-      let scale = dom.getAttribute('data-scale');
-      scale = scale ? -scale : -1;
-      this.$refs.cropper.scaleY(scale);
-      dom.setAttribute('data-scale', scale);
-    },
-    setImage(e) {
-      const file = e.target.files[0];
-      if (file.type.indexOf('image/') === -1) {
-        alert('Please select an image file');
-        return;
+    data () {
+      return {
+          // 展示选中的的imageSrc
+        insideSrc1: '',
+		out:'123',
+		file1: '',
+          // 接受上传的文件类型
+        acceptFile: 'image/png,image/jpeg'
       }
-      if (typeof FileReader === 'function') {
-        const reader = new FileReader();
+    },
+    methods: {
+      beforeUpload1 (file) {
+        if (!this.acceptFile.split(',').includes(file.type)) {
+          this.$Message.warning('未选中图片格式的文件')
+          return false
+        }
+        if (file.size / 1024 > this.maxSize) {
+          this.$Message.warning(`文件大小超过了${this.maxSize}KB`)
+          return false
+        }
+          // 照片转换为base64
+        const reader = new FileReader()
+          // 将读取到的文件编码成Data URL
+        reader.readAsDataURL(file)
         reader.onload = (event) => {
-          this.imgSrc = event.target.result;
-          // rebuild cropperjs with the updated source
-          this.$refs.cropper.replace(event.target.result);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        alert('Sorry, FileReader API not supported');
-      }
-    },
-    showFileChooser() {
-      this.$refs.input.click();
-    },
-    zoom(percent) {
-      this.$refs.cropper.relativeZoom(percent);
-    },
-  },
-};
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-
-input[type="file"] {
-  display: none;
-}
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0 5px 0;
-}
-.header h2 {
-  margin: 0;
-}
-.header a {
-  text-decoration: none;
-  color: black;
-}
-.content {
-  display: flex;
-  justify-content: space-between;
-}
-.cropper-area {
-  width:614px;
-}
-.img-cropper{
-	 width: 500px;
-}
-.actions {
-  margin-top: 1rem;
-}
-.actions a {
-  display: inline-block;
-  padding: 5px 15px;
-  background: #0062CC;
-  color: white;
-  text-decoration: none;
-  border-radius: 3px;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
-}
-textarea {
-  width: 100%;
-  height: 100px;
-}
-.preview-area {
-  width: 400px;
-}
-.preview-area p {
-  font-size: 1.25rem;
-  margin: 0;
-  margin-bottom: 1rem;
-}
-.preview-area p:last-of-type {
-  margin-top: 1rem;
-}
-.preview {
-  width: 100%;
-  height: calc(372px * (9 / 16));
-  overflow: hidden;
-}
-.crop-placeholder {
-  width: 100%;
-  height: 200px;
-  background: #ccc;
-}
-.cropped-image img {
-  max-width: 100%;
-}
+          // this.title = reader.result
+		  //this.param.uploadFile[0]=reader.result
+          this.insideSrc1= event.srcElement.result
+		  document.getElementById("img1").style.display="inline" 
+		  this.file1 = file;
+        }
+          // 若返回 false 则停止上传,此时中断则判断大小无法使用max-size属性判断
+        return false
+      },
+	  onSubmit (){
+		 let formData = new FormData();
+		formData.append('uploadFile', this.file1);
+		this.$message.success('识别中！请耐心等待！');
+		axios.post('http://localhost:8081/targetextraction/' ,formData,
+			{
+				headers:{
+					'token':localStorage.token,
+					'Content-Type' : 'multipart/form-data'
+						}
+					}).then(res => {
+						if(res.data.code==200)
+						{
+							this.out=res.data.data;
+							document.getElementById("img3").style.display="inline" 
+							
+						}else{
+							this.$message.success('上传失败，请检查后重新上传！');
+						}
+						
+					})
+	  },
+    }
+  }
+  </script>
+  <style scoped>
+    .imageWrap {
+      /* width: 100%;
+      height: 200px;
+      border: 1px solid red; */
+      object-fit: cover;
+	  display: none;
+    }
+    img {
+      width: 300px;
+      height: 400px;
+      border: 1px solid #000;
+	  /* float:left; */
+    }
+	.rowdiv{
+		float:left;
+		margin-left: 50px;
+	}
 </style>
