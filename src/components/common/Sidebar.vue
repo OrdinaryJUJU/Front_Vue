@@ -30,6 +30,11 @@ export default {
                 },
 				{
 				    icon: "el-icon-lx-cascades",
+				    index: "/imagelist",
+				    title: "我的图库",
+				},
+				{
+				    icon: "el-icon-lx-cascades",
 				    index: "/extractiontarget",
 				    title: "目标提取",
 				},
@@ -47,11 +52,6 @@ export default {
 				    icon: "el-icon-lx-cascades",
 				    index: "/classification",
 				    title: "地物分类",
-				},
-				{
-				    icon: "el-icon-lx-cascades",
-				    index: "/imagelist",
-				    title: "历史上传",
 				},
 				{
 				    icon: "el-icon-lx-cascades",

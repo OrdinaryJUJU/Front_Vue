@@ -18,9 +18,6 @@
                             <el-option key="female" label="女" value="1"></el-option>
                         </el-select>
                     </el-form-item>
-					<el-form-item label="密 码:" prop="password" placeholder="请输入密码" >
-					    <el-input v-model="form.password"></el-input>
-					</el-form-item>
                     <el-form-item >
                         <el-button position="right" type="primary" @click="onSubmit">提交</el-button>
                         <el-button>取消</el-button>
@@ -28,11 +25,12 @@
                 </el-form>
             </div>
         </div>
-
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+	
     name: 'register',
 	// computed:{
 	// 	dataRule(){
@@ -56,7 +54,6 @@ export default {
                 email: '',
                 username: '',
                 gender: '',
-                password: '',
             }
         };
     },
@@ -64,16 +61,24 @@ export default {
         onSubmit() {
 			// 提交成功则msg进行成功提示，跳转login页面
 			//提交失败，页面不免，显示失败原因
-			register(form).then((res)=>{
-				formRef.value.code=res.data;
-				if(formRef.value.code==0){
-					console.log(form);
-					this.$message.success('提交成功！');
-				}else{
-					return false;
-				}
-			});
-            
+			axios.post('http://192.168.31.18:8081/user/updateuser' ,
+						this.form,
+						{
+							headers:{
+								'token':localStorage.token,
+								'Content-Type' : 'multipart/form-data',
+									}
+						}
+						).then(res => {
+							this.loading=false;
+							if(res.data.code==200)
+							{
+								this.$message.success(res.data.msg);
+							}else{
+								this.$message.success(res.data.msg);
+							}
+							
+						})
         }
     },
 	

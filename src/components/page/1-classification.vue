@@ -6,7 +6,6 @@
 		</div>
 		<el-button @click="playVideo" id="select1" icon='el-icon-thumb' round='true' size="medium"> 选择图片 </el-button>
 		<div class="imageWrap" id="img2" >
-		  
 		  <div v-loading="loading"  
 			element-loading-text="处理中"
 			element-loading-spinner="el-icon-loading"
@@ -27,9 +26,9 @@
     >
 		<div class="circle">
 		  <ul class="circle-ul">
-		    <li v-for="(item) of dataImageList" :key="item.id" class="circle-li">
-		      <div v-on:click="changeList(item.id)" v-bind:class="{changeBorder:item.id==a}" value="change!">
-		        <img :src="item.coverImg" style="width: 100px;height: 100px;padding-top: 5px;" alt />
+		    <li v-for="(item) of dataImageList" :key="item.index" class="circle-li">
+		      <div v-on:click="changeList(item.index)" v-bind:class="{changeBorder:item.index==a}" value="change!">
+		        <img :src="item.imgUrl" style="width: 100px;height: 100px;padding-top: 5px;" alt />
 		        <div class="topic-shade">
 		          <div class="shade"><img src="../../assets/img/对号.png" style="width: 14px;height: 14px;" alt /></div>
 		        </div>
@@ -60,7 +59,7 @@ export default {
   						this.dataImageList=res.data.data;
   						for (var i = 0; i < this.dataImageList.length; i++) {
   							this.dataImageList[i].coverImg=this.dataImageList[i].imgUrl;
-  							this.dataImageList[i].id=i;
+  							this.dataImageList[i].index=i;
   						}
 						console.log(this.dataImageList);
   					}else{
@@ -74,7 +73,7 @@ export default {
   },
   data() {
       return {
-		 a:1,
+		 a:0,
 		 dataImageList: [],
 		 selectImg:'',
 		 out:'',
@@ -117,11 +116,11 @@ export default {
 							
 						})
 		},
-		changeList(id){
-		      if(this.a == id){
+		changeList(index){
+		      if(this.a == index){
 		          //this.a =! this.a;
 		      }else{
-		          this.a =id;
+		          this.a =index;
 		      } 
 		    },
         playVideo() {
