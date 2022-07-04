@@ -11,6 +11,7 @@ export default {
 	         window.addEventListener('beforeunload',()=>{
 	            localStorage.removeItem('token');
 				localStorage.removeItem('ms_username');
+				localStorage.removeItem('imgList');
 	        });
 	    },
 }

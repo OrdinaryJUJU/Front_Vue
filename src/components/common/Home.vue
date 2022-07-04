@@ -2,8 +2,8 @@
     <div class="wrapper">
         <v-head></v-head>
         <v-sidebar></v-sidebar>
-        <div class="content-box" :class="{'content-collapse':collapse}">
-            <v-tags></v-tags>
+        <div :class="{'content-collapse':collapse}">
+            <!-- <v-tags></v-tags> -->
             <div class="content">
                 <transition name="move" mode="out-in">
                     <keep-alive :include="tagsList">
@@ -49,3 +49,10 @@ export default {
     }
 };
 </script>
+<style>
+.wrapper{
+	background: url(../../assets/img/bg.png) repeat fixed center;
+	background-size: 80%;
+	background-color: #b3b3b3;
+}
+</style>

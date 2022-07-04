@@ -74,7 +74,7 @@ import axios from 'axios';
 		 let formData = new FormData();
 		formData.append('uploadFile', this.file1);
 		this.$message.success('识别中！请耐心等待！');
-		axios.post('http://localhost:8081/targetextraction/' ,formData,
+		axios.post('http://localhost:8081/targetdetection/' ,formData,
 			{
 				headers:{
 					'token':localStorage.token,

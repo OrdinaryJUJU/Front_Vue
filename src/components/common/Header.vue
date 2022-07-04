@@ -1,11 +1,12 @@
 <template>
     <div class="header">
         <!-- 折叠按钮 -->
-        <div class="collapse-btn" @click="collapseChage">
+        <!-- <div class="collapse-btn" @click="collapseChage">
             <i v-if="!collapse" class="el-icon-s-fold"></i>
             <i v-else class="el-icon-s-unfold"></i>
-        </div>
-        <div class="logo">遥感图像处理系统</div>
+        </div> -->
+		<img src="../../assets/img/logo.png" height="70px"></img>
+        <div class="logo"></div>
         <div class="header-right">
             <div class="header-user-con">
                 <!-- 全屏显示 -->
@@ -121,6 +122,7 @@ export default {
     height: 70px;
     font-size: 22px;
     color: #fff;
+	background: #b3b3b3;
 }
 .collapse-btn {
     float: left;
@@ -132,6 +134,11 @@ export default {
     float: left;
     width: 250px;
     line-height: 70px;
+	margin: 0 auto;
+	text-align: center;
+}
+.logo{
+	
 }
 .header-right {
     float: right;

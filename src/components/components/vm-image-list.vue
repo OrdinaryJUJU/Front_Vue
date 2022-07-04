@@ -16,8 +16,8 @@
       </Row>
     </Row>
     <Row class="image-list" :gutter="16" >
-      <Col :lg="6" :sm="12" class="vm-margin" v-for="item in dataShow" :key="item.id" style="margin:10px;">
-        <VmCard :editable="true"  :img="item.img" @delete-ok=" deleteOk(item) "></VmCard>
+      <Col :lg="6" :sm="12" class="vm-margin" v-for="item in dataShow"  style="margin:10px;">
+        <VmCard :editable="true"  :img="item.imgUrl" @delete-ok=" deleteOk(item) "></VmCard>
       </Col>
     </Row>
   </div>
@@ -41,9 +41,9 @@
         default: function () {
           return [
             {
-              id: '19920805',
-              title: 'Title',
-              img: require('../assets/img/img-1.jpg'),
+              uploadTime: '2022-07-01T10:10:16.000+00:00',
+              imgName: 'bhjc1.jpg',
+              imgUrl: require('../assets/img/img-1.jpg'),
             }
           ]
         }

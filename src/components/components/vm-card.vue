@@ -1,7 +1,7 @@
 <template>
   <div :class="[type === 'horizantal' ? 'vm-card-horizantal' : 'vm-card-vertical' , 'vm-panel']">
     <div class="card-img">
-      <img :src="img" alt="">
+      <img :src="imgUrl" alt="">
       <div v-if="editable && type == 'vertical'" class="control">
         <span class="edit">
           <a :href="editUrl">
@@ -14,11 +14,7 @@
       </div>
     </div>
     <div class="card-desc panel-body">
-      <h2>{{ title }}</h2>
-      <p>{{ desc }}</p>
-      <a :href="detailUrl">
-        more >
-      </a>
+      <h2>{{ uploadTime }}</h2>
     </div>
     <Modal
         v-model="modalDelete"
@@ -38,29 +34,17 @@
         type: String,
         default: 'vertical'
       },
-      editable: {
-        type: Boolean,
-        default: false
-      },
-      title: {
+      uploadTime: {
         type: String,
-        default: 'Title'
+        default: "2022-07-01T10:10:16.000+00:00"
       },
-      img: {
+      imgUrl: {
         type: String,
-        default: require('../assets/img/img-1.jpg')
+		default:'http://cup.lijx.cloud/img/gallery/2022/7/1/1cf91f1e-9b4d-4a15-84c6-b6dac167bb43',
       },
-      desc: {
+      imgName: {
         type: String,
-        default: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry,Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s'
-      },
-      detailUrl: {
-        type: String,
-        default: '#'
-      },
-      editUrl: {
-        type: String,
-        default: '#'
+        default: 'Lorem '
       }
     },
     data: function () {
