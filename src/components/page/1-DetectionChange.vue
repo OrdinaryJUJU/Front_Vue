@@ -12,7 +12,10 @@
 			element-loading-spinner="el-icon-loading"
 			element-loading-background="rgba(0, 0, 0, 0.8)"  
 			class="rowdiv2">
-				<img class="select" :src="this.out" alt="" height="300" width="200" >
+				<el-tag>热力图</el-tag>
+				<img class="select" :src="this.out1" alt="" height="300" width="200" >
+				<el-tag>变化检测</el-tag>
+				<img class="select" :src="this.out2" alt="" height="300" width="200" >
 			</div>
 		  
 		  <el-button @click="playVideo" id="select1" icon='el-icon-thumb' round='true' size="medium"> 重新选择 </el-button>
@@ -20,13 +23,13 @@
 	</div>	
     <el-dialog
       :visible.sync="videoVisible"
-      width="80%"
+      width="60%"
       title="选择图像"
       @close="closeDialog"
     >
 		<div class="circle">
-		  <ul class="circle-ul">
 			<div>选择图片1：&nbsp</div>
+			 <ul class="circle-ul">
 		    <li v-for="(item) of dataImageList" :key="item.index" class="circle-li">
 		      <div v-on:click="changeList(item.index)" v-bind:class="{changeBorder:item.index==a}" value="change!">
 		        <img :src="item.imgUrl" style="width: 100px;height: 100px;padding-top: 5px;" alt />
@@ -35,7 +38,10 @@
 		        </div>
 		      </div>
 		    </li> 
+			 </ul>
+			
 			<div>选择图片2：&nbsp</div>
+			<ul class="circle-ul">
 			<li v-for="(item) of dataImageList" :key="item.index" class="circle-li">
 			  <div v-on:click="changeList2(item.index)" v-bind:class="{changeBorder:item.index==b}" value="change!">
 			    <img :src="item.imgUrl" style="width: 100px;height: 100px;padding-top: 5px;" alt />
@@ -88,7 +94,8 @@ export default {
 		 dataImageList: [],
 		 selectImg1:'',
 		 selectImg2:'',
-		 out:'',
+		 out1:'',
+		 out2:'',
         //默认false 弹框隐藏状态    
          videoVisible: false,
 		 selectedImages: [],
@@ -123,7 +130,8 @@ export default {
 							this.loading=false;
 							if(res.data.code==200)
 							{
-								this.out=res.data.data;
+								this.out1=res.data.data.attention_img;
+								this.out2=res.data.data.binary_img;
 			
 							}else{
 								this.$message.success(res.data.msg);

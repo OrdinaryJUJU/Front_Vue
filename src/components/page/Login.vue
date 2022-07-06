@@ -20,7 +20,9 @@
                 </el-form-item>
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm()">登录</el-button>
-					<el-link href="http://localhost:8080/#/register">暂无账号，去注册..</el-link>
+					<el-menu :default-active="onRoutes" router>
+							<el-menu-item index="/register" key="/register" >暂无账号，点击注册..</el-menu-item>
+					</el-menu>
                 </div>
                 <!-- <p class="login-tips">Tips : 用户名和密码随便填。</p> -->
             </el-form>

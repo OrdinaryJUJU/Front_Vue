@@ -32,18 +32,7 @@ import axios from 'axios'
 export default {
 	
     name: 'register',
-	// computed:{
-	// 	dataRule(){
-	// 		const notnull = /\s*\S+?/
-	// 		return {
-	// 			name:[
-	// 				{required:true, message:'必填项不能为空',trigger:'blur'},
-	// 				{pattern: notnull,message:'请输入非空字符',trigger:'blur'}
-	// 			]
-	// 		}
-	// 	}
-		
-	// },
+	
     data() {
         return {
 			// email:[

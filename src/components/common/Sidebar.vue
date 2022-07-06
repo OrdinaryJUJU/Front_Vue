@@ -25,8 +25,8 @@ export default {
             items: [
                 {
                     icon: 'el-icon-lx-home',
-                    index: 'dashboard',
-                    title: '系统首页'
+                    index: '/imgenhancement',
+                    title: '图像增强'
                 },
 				{
 				    icon: "el-icon-lx-cascades",
