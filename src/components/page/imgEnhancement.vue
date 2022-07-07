@@ -3,12 +3,12 @@
 		<el-button @click="playVideo"  icon='el-icon-thumb' round='true' size="medium"> 选择图片 </el-button>
 	<div class="enhance">
     <div calss="dv1"id='img1'>
-      <el-image   style="width: 300px; height: 300px;margin-right:50px" :src="url" fit="fill" />
-	  				<el-image  style="width: 300px; height: 300px" :src="valueReturn" fit="fill" v-loading="loading"
+		<el-image   style=" height: 300px;margin-right:50px" :src="url" fit="fill" />
+		<el-image  style="height: 300px" :src="valueReturn" fit="fill" v-loading="loading"
 	  			element-loading-text="处理中"
 	  			element-loading-spinner="el-icon-loading"
 	  			element-loading-background="rgba(0, 0, 0, 0.8)" />
-				 <el-button id='img2' type="primary" @click="save()">保存到图库</el-button>
+		<el-button id='img2' type="primary" @click="save()">保存到图库</el-button>
     </div>
 	 
 	<div style="width: 80%; border-radius: 25px;">

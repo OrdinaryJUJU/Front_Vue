@@ -2,7 +2,7 @@
   <div >
 	<div class="rowdiv" >
 		<div class="imageWrap" id="img1" >
-		  <img class="select" :src="this.selectImg" alt="" height="300" width="200">
+		  <img class="select" :src="this.selectImg" alt="" height="500" >
 		</div>
 		<el-button @click="playVideo" id="select1" icon='el-icon-thumb' round='true' size="medium"> 选择图片 </el-button>
 		<div class="imageWrap" id="img2" >
@@ -11,7 +11,7 @@
 			element-loading-spinner="el-icon-loading"
 			element-loading-background="rgba(0, 0, 0, 0.8)"  
 			class="rowdiv2">
-				<img class="select" :src="this.out" alt="" height="300" width="200" >
+				<img class="select" :src="this.out" alt="" height="500" >
 			</div>
 		  
 		  <el-button @click="playVideo" id="select1" icon='el-icon-thumb' round='true' size="medium"> 重新选择 </el-button>
@@ -19,7 +19,7 @@
 	</div>	
     <el-dialog
       :visible.sync="videoVisible"
-      width="80%"
+      width="60%"
       title="选择图像"
       @close="closeDialog"
 	  

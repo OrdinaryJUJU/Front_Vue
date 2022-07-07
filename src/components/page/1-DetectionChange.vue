@@ -2,8 +2,8 @@
   <div >
 	<div class="rowdiv" >
 		<div class="imageWrap" id="img1" >
-		  <img class="select" :src="this.selectImg1" alt="" height="300" width="200">
-		  <img class="select" :src="this.selectImg2" alt="" height="300" width="200">
+		  <img class="select" :src="this.selectImg1" alt="" height="500" >
+		  <img class="select" :src="this.selectImg2" alt="" height="500" >
 		</div>
 		<el-button @click="playVideo" id="select1" icon='el-icon-thumb' round='true' size="medium"> 选择图片 </el-button>
 		<div class="imageWrap" id="img2" >
@@ -13,9 +13,9 @@
 			element-loading-background="rgba(0, 0, 0, 0.8)"  
 			class="rowdiv2">
 				<el-tag>热力图</el-tag>
-				<img class="select" :src="this.out1" alt="" height="300" width="200" >
+				<img class="select" :src="this.out1" alt="" height="500"  >
 				<el-tag>变化检测</el-tag>
-				<img class="select" :src="this.out2" alt="" height="300" width="200" >
+				<img class="select" :src="this.out2" alt="" height="500"  >
 			</div>
 		  
 		  <el-button @click="playVideo" id="select1" icon='el-icon-thumb' round='true' size="medium"> 重新选择 </el-button>

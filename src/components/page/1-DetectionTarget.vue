@@ -2,20 +2,19 @@
   <div  style="overflow: auto">
 	<div class="rowdiv" >
 		<div class="imageWrap" id="img1" >
-		  <img class="select" :src="this.selectImg" height='300' alt="" >
+		  <img class="select" :src="this.selectImg" height='500' alt="" >
 		</div>
 		<el-button @click="playVideo" id="select1" icon='el-icon-thumb' round='true' size="medium"> 选择图片 </el-button>
 		<div class="imageWrap" id="img2" >
-		  <div v-loading="loading"  
-			element-loading-text="处理中"
-			element-loading-spinner="el-icon-loading"
-			element-loading-background="rgba(0, 0, 0, 0.8)"  
-			class="rowdiv2">
-				  <el-tag type="danger">{{this.category}}</el-tag>
-				  <el-tag type="danger">{{this.score}}</el-tag>
-				<canvas id="myCanvas" ref="myCanvas"width="940" height="570" :style="{'background-image': 'url(' + this.out + ')'}">
-				</canvas>
-			</div>
+		  <div v-loading="loading"
+		  			element-loading-text="处理中"
+		  			element-loading-spinner="el-icon-loading"
+		  			element-loading-background="rgba(0, 0, 0, 0.8)"  
+		  			class="rowdiv2">
+		  				<img class="select" :src="this.out" alt="" height="500"  >
+		  			</div>
+			<!-- <canvas id="myCanvas" ref="myCanvas"width="940" height="570" :style="{'background-image': 'url(' + this.out + ')'}">
+			</canvas> -->
 		  <el-button @click="playVideo" id="select1" icon='el-icon-thumb' round='true' size="medium"> 重新选择 </el-button>
 		</div>
 	</div>	
@@ -47,6 +46,7 @@ import axios from 'axios'
 export default {
   name: 'detectiontarget',
   created() {
+	 
   	axios.get('http://localhost:8081/gallery/getimage/' ,{
   		    params:{
   				username: localStorage.ms_username
@@ -78,6 +78,7 @@ export default {
 		 dataImageList: [],
 		 selectImg:'',
 		 out:'',
+		 outimg:'',
 		 x:0,
 		 y:0,
 		 height:0,
@@ -116,30 +117,34 @@ export default {
 							this.loading=false;
 							if(res.data.code==200)
 							{
-								//this.out=res.data.data;
+								this.out=res.data.data;
+								this.$message.success(res.data.msg);
 								  // 获取canvas
-								  this.category=res.data.data.category
-								  this.score=res.data.data.score
-								 const canvas = this.$refs.myCanvas;
-								 var ctx = canvas.getContext("2d");
-								 var img = new Image()
-								     img.src = this.out
-									 canvas.setAttribute("width",img.width)
-									 canvas.setAttribute("height",img.height)
-								    this.x=res.data.data.bbox[0]
-								    this.y=res.data.data.bbox[1]
-								    this.width=res.data.data.bbox[2]-res.data.data.bbox[0]
-								    this.height=res.data.data.bbox[3]-res.data.data.bbox[1]
-								    ctx.clearRect(0,0,canvas.width,canvas.height);
-								    ctx.beginPath();
+								 //  this.category=res.data.data.category
+								 //  this.score=res.data.data.score
+								 // const canvas = this.$refs.myCanvas;
+								 // var ctx = canvas.getContext("2d");
+								 // var img = new Image()
+								 //     img.src = this.out
+									//  canvas.setAttribute("width",img.width)
+									//  canvas.setAttribute("height",img.height)
+								 //    this.x=res.data.data.bbox[0]
+								 //    this.y=res.data.data.bbox[1]
+								 //    this.width=res.data.data.bbox[2]-res.data.data.bbox[0]
+								 //    this.height=res.data.data.bbox[3]-res.data.data.bbox[1]
+								 //    ctx.clearRect(0,0,canvas.width,canvas.height);
+								 //    ctx.beginPath();
 								  
-								    //设置线条颜色，必须放在绘制之前
-								                     ctx.strokeStyle = '#aa0000';
-								                     // 线宽设置，必须放在绘制之前
-								                     ctx.lineWidth = 3;
-								                     ctx.strokeRect(this.x, this.y, this.width, this.height)
-													   console.log(this.x, this.y, this.width, this.height)
-													   console.log(this.out.width, this.out.height)
+								 //    //设置线条颜色，必须放在绘制之前
+								 //    ctx.strokeStyle = '#aa0000';
+								 //                     // 线宽设置，必须放在绘制之前
+								 //    ctx.lineWidth = 3;
+								 //    ctx.strokeRect(this.x, this.y, this.width, this.height)
+									// console.log(this.x, this.y, this.width, this.height)
+									// console.log(this.out.width, this.out.height)
+									// this.outimg=canvas.toDataURL();
+									// console.log(this.outimg)
+									
 							}else{
 								this.$message.success(res.data.msg);
 							}
@@ -156,6 +161,7 @@ export default {
         playVideo() {
             //触发点击时,让其显示
             this.videoVisible = true
+			
         },
         //事件操作 (表格、表单 同理 需要执行的事件 在此处)
         closeDialog() {
@@ -167,6 +173,10 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+// .select{
+// 	width:150px;
+// 	height:150px;
+// }
 // .select{
 // 	width:150px;
 // 	height:150px;
@@ -188,10 +198,14 @@ body {
 #select1{
 	margin-left: 5px;
 }
-#mycanvas {
-  border: 1px solid rgb(199, 198, 198);
-}
-
+.rowdiv{
+		float:left;
+		margin-left: 50px;
+	}
+.rowdiv2{
+		float:right;
+		margin-left: 50px;
+	}
 .circle{
   position: relative;
   width: 632px;
